@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - MeubelBackendApplication",
+            "request": "launch",
+            "mainClass": "com.bassiuz.meubel.MeubelBackendApplication",
+            "projectName": "heroku-demo"
+        }
+    ]
+}

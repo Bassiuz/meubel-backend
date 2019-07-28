@@ -1,12 +1,12 @@
-package com.example.herokudemo;
+package com.bassiuz.meubel;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HerokuDemoApplication {
+public class MeubelBackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HerokuDemoApplication.class, args);
+		SpringApplication.run(MeubelBackendApplication.class, args);
 	}
 }
