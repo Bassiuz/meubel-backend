@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.bassiuz.meubel.MeubelResponse;
+import com.bassiuz.meubel.Shop;
+import com.bassiuz.meubel.util.StringParserUtil;
 
 import org.jsoup.Jsoup;
 
@@ -30,11 +32,14 @@ public class LeenBakkerParser {
                         if (productPart.contains("<img alt=\"\" src=\"//"))
                         {
                             MeubelResponse meubel = new MeubelResponse();
+                            meubel.setShop(Shop.LEENBAKKER);
+
                             String imageURL = productPart.substring(productPart.indexOf("<img alt=\"\" src=\"//") + 17, productPart.indexOf("\" onerror="));
                             meubel.setImageUrl(imageURL);
 
-                            String productName = productPart.substring(productPart.indexOf("<div class=\"product_name\">"), productPart.indexOf("<div class=\"product_description\">"));
-                            productName = productName.substring(productName.indexOf(";\">") + 3, productName.indexOf("</a>"));
+                            String productName = StringParserUtil.getStringBetweenTwoStrings(productPart, "<div class=\"product_name\">", "<div class=\"product_description\">");
+                           
+                            productName = StringParserUtil.getStringBetweenTwoStrings(productName, ";\">", "</a>");
                             meubel.setName(productName);
 
                             response.add(meubel);

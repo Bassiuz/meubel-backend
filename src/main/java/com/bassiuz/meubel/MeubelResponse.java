@@ -2,10 +2,11 @@ package com.bassiuz.meubel;
 
 public class MeubelResponse {
 
-   String name;
-   String description;
-   String shopUrl;
-   String imageUrl;
+   private String name;
+   private String description;
+   private String shopUrl;
+   private String imageUrl;
+   private Shop shop;
 
     public MeubelResponse()
     {
@@ -43,6 +44,12 @@ public class MeubelResponse {
         this.imageUrl = imageUrl;
     }
 
+    public Shop getShop() {
+        return shop;
+    }
 
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
     
 }
