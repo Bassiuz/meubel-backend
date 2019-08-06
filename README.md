@@ -1,12 +1,10 @@
-## Spring Boot Heroku Deployment Example
-
-**Tutorial:** [Deploying / Hosting Spring Boot applications on Heroku](https://www.callicoder.com/deploy-host-spring-boot-apps-on-heroku/) 
+## Meubel Backend Deployment
 
 ## Running the application locally
 
 ```bash
-git clone https://github.com/callicoder/spring-boot-heroku-deployment-example.git
-cd spring-boot-heroku-deployment-example
+git clone https://github.com/Bassiuz/meubel-backend.git
+cd meubel-backend
 mvn spring-boot:run
 ```
 
