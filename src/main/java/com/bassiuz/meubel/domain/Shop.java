@@ -1,4 +1,4 @@
-package com.bassiuz.meubel;
+package com.bassiuz.meubel.domain;
 
 public enum Shop {
     IKEA,

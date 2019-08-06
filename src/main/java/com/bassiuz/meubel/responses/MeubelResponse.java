@@ -1,4 +1,6 @@
-package com.bassiuz.meubel;
+package com.bassiuz.meubel.responses;
+
+import com.bassiuz.meubel.domain.Shop;
 
 public class MeubelResponse {
 

@@ -15,9 +15,4 @@ public class IndexController {
     public String index() {
         return "Hello there! I'm running on custom github push.";
     }
-
-    @RequestMapping(value = "/ping", method = RequestMethod.GET, produces = "application/json")
-    public PingResponse welcomeMessageAsJson() {
-        return new PingResponse();
-    }
 }

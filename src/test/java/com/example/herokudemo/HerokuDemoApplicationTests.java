@@ -11,7 +11,9 @@ public class HerokuDemoApplicationTests {
 
 	@Test	
 	public void contextLoads() {
-		assertTrue("test", true);
+		Boolean passTest = true;
+
+		assertTrue("Pass default assertion test", passTest);
 	}
 
 }

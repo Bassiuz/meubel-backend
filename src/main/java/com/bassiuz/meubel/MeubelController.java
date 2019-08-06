@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.bassiuz.meubel.parsers.IkeaParser;
 import com.bassiuz.meubel.parsers.LeenBakkerParser;
+import com.bassiuz.meubel.responses.MeubelResponse;
 
 import org.jsoup.Jsoup;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,8 +30,8 @@ public class MeubelController {
     @RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = "application/json")
     public List<MeubelResponse> getMeubel( @RequestParam("name") String name) {
         List<MeubelResponse> response  = new ArrayList<>();
-        List<MeubelResponse> leenBakkerResponses = LeenBakkerParser.parseMeubelsFromLeenBakkerForName(name);
-        List<MeubelResponse> ikeaResponses = IkeaParser.parseMeubelsFromIkeaForName(name);
+        List<MeubelResponse> leenBakkerResponses = new LeenBakkerParser().parseMeubelsForName(name);
+        List<MeubelResponse> ikeaResponses =  new IkeaParser().parseMeubelsForName(name);
 
         response.addAll(leenBakkerResponses);
         response.addAll(ikeaResponses);
@@ -42,11 +43,11 @@ public class MeubelController {
     public List<MeubelResponse> getMeubelFromShop(@RequestParam("name") String name, @RequestParam("store") String store) {
         if(store.equals("IKEA"))
         {
-            return IkeaParser.parseMeubelsFromIkeaForName(name);
+            return new IkeaParser().parseMeubelsForName(name);
         }
         else if(store.equals("LEEN BAKKER"))
         {
-            return LeenBakkerParser.parseMeubelsFromLeenBakkerForName(name);
+            return new LeenBakkerParser().parseMeubelsForName(name);
         }
         return null;
     }

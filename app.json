@@ -1,6 +1,6 @@
 {
-  "name": "Spring Boot Sample",
-  "description": "A Spring Boot Hello World app for demonstrating deployment on Heroku",
-  "repository": "https://github.com/callicoder/spring-boot-heroku-deployment-example",
+  "name": "Meubel Back-end",
+  "description": "Back-end to the website 'Meubels zijn net mensen'",
+  "repository": "https://github.com/Bassiuz/meubel-backend",
   "keywords": ["Spring Boot", "Heroku", "Deployment"]
 }

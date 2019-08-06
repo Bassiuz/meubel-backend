@@ -4,8 +4,6 @@ import java.util.List;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.bassiuz.meubel.MeubelResponse;
-
 import org.jsoup.Jsoup;
 
 public class StringParserUtil {

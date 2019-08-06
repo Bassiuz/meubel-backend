@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bassiuz.meubel.parsers.LeenBakkerParser;
+import com.bassiuz.meubel.responses.MeubelResponse;
 
 import org.jsoup.Jsoup;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,7 +29,7 @@ public class LeenBakkerController {
     @RequestMapping(value = "/Meubel", method = RequestMethod.GET, produces = "application/json")
     public List<MeubelResponse> getMeubel( @RequestParam("name") String name) {
 
-        List<MeubelResponse> response = LeenBakkerParser.parseMeubelsFromLeenBakkerForName(name);
+        List<MeubelResponse> response = new LeenBakkerParser().parseMeubelsForName(name);
 
 
         return response;
