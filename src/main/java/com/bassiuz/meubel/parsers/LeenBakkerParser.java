@@ -1,4 +1,4 @@
- package com.bassiuz.meubel.parsers;
+package com.bassiuz.meubel.parsers;
 
 import java.util.List;
 import java.io.IOException;
@@ -21,15 +21,13 @@ public class LeenBakkerParser implements MeubelParser {
                     "https://www.leenbakker.nl/SearchDisplay?categoryId=&storeId=10151&catalogId=10051&langId=-100&sType=SimpleSearch&resultCatEntryType=2&showResultsPage=true&searchSource=Q&pageView=&beginIndex=0&pageSize=12&searchTerm="
                             + name)
                     .get().html();
-                
-        System.out.println(HTML);
+
+            System.out.println(HTML);
             if (HTML.contains("updateSearchTermHistoryCookieAndRedirect")) {
                 // contains only one product.
                 String redirectUrl = StringParserUtil.getStringBetweenTwoStrings(HTML, name + "\", \"", "\");");
 
-                HTML = Jsoup.connect(
-                        redirectUrl)
-                        .get().html();
+                HTML = Jsoup.connect(redirectUrl).get().html();
 
                 MeubelResponse meubel = new MeubelResponse();
                 meubel.setShop(Shop.LEENBAKKER);
@@ -39,18 +37,17 @@ public class LeenBakkerParser implements MeubelParser {
                         "<input type=\"hidden\"");
                 productName = StringParserUtil.getStringBetweenTwoStrings(productName, ">", "</h1>");
                 meubel.setName(productName);
-/*
-                String productDescription = StringParserUtil.getStringBetweenTwoStrings(HTML,
-                        "<p class=\"product_shortdescription\"", "p>");
-                productDescription = StringParserUtil.getStringBetweenTwoStrings(productDescription, "\">", "</");
-                meubel.setDescription(productDescription);
                 
+                String productDescription = StringParserUtil.getStringBetweenTwoStrings(HTML,
+                        "<meta name=\"description\"", "<meta name=\"keywords\"");
+                productDescription = StringParserUtil.getStringBetweenTwoStrings(productDescription, "content=\"",
+                        "\">");
+                meubel.setDescription(productDescription);
 
-              String imageURL = HTML.substring(HTML.indexOf("<img alt=\"\" src=\"//") + 17,
-                        HTML.indexOf("\" onerror="));
+                String imageURL = StringParserUtil.getStringBetweenTwoStrings(HTML, "id=\"productMainImage\" src=\"",
+                        "\" alt=");
                 meubel.setImageUrl(imageURL);
 
-*/
                 if (productName.toUpperCase().contains(name.toUpperCase())) {
                     response.add(meubel);
                 }
