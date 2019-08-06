@@ -7,6 +7,7 @@ import java.util.List;
 import com.bassiuz.meubel.parsers.IkeaParser;
 import com.bassiuz.meubel.parsers.LeenBakkerParser;
 import com.bassiuz.meubel.responses.MeubelResponse;
+import com.bassiuz.meubel.util.RandomNameGenerator;
 
 import org.jsoup.Jsoup;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -37,6 +38,38 @@ public class MeubelController {
         response.addAll(ikeaResponses);
 
         return response;
+    }
+
+    @RequestMapping(value = "/getSomeRandom", method = RequestMethod.GET, produces = "application/json")
+    public List<MeubelResponse> getSomeRandom() {
+        List<MeubelResponse> totalResponse  = new ArrayList<>();
+        final int amountOfRandomResults = 5;
+        
+        for (int i = 0; i < amountOfRandomResults; i++) {
+            String name = RandomNameGenerator.getRandomName();
+            List<MeubelResponse> response  = new ArrayList<>();
+            List<MeubelResponse> leenBakkerResponses = new LeenBakkerParser().parseMeubelsForName(name);
+            List<MeubelResponse> ikeaResponses =  new IkeaParser().parseMeubelsForName(name);
+    
+            response.addAll(leenBakkerResponses);
+            response.addAll(ikeaResponses);
+            if (response.size() > 0)
+            {
+                totalResponse.add(response.get(0));
+            }
+            else
+            {
+                // if a name has no responses, try another name.
+                i--;
+            }
+        }
+      
+        return totalResponse;
+    }
+
+    @RequestMapping(value = "/getRandomName", method = RequestMethod.GET, produces = "application/json")
+    public String getRandomName() {
+        return RandomNameGenerator.getRandomName();
     }
 
     @RequestMapping(value = "/getAllFromShop", method = RequestMethod.GET, produces = "application/json")

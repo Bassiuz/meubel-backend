@@ -22,9 +22,6 @@ public class IkeaParser implements MeubelParser {
             String HTML = Jsoup.connect("https://www.ikea.com/nl/nl/search/?query=" + name).get().html();
 
             if (HTML.contains("id=\"productDisplay\"")) {
-
-                System.out.println(HTML);
-
                 MeubelResponse meubel = new MeubelResponse();
                 meubel.setShop(Shop.IKEA);
 

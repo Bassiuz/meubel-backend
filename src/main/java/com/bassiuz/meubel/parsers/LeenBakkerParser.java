@@ -21,8 +21,6 @@ public class LeenBakkerParser implements MeubelParser {
                     "https://www.leenbakker.nl/SearchDisplay?categoryId=&storeId=10151&catalogId=10051&langId=-100&sType=SimpleSearch&resultCatEntryType=2&showResultsPage=true&searchSource=Q&pageView=&beginIndex=0&pageSize=12&searchTerm="
                             + name)
                     .get().html();
-
-            System.out.println(HTML);
             if (HTML.contains("updateSearchTermHistoryCookieAndRedirect")) {
                 // contains only one product.
                 String redirectUrl = StringParserUtil.getStringBetweenTwoStrings(HTML, name + "\", \"", "\");");
@@ -37,7 +35,7 @@ public class LeenBakkerParser implements MeubelParser {
                         "<input type=\"hidden\"");
                 productName = StringParserUtil.getStringBetweenTwoStrings(productName, ">", "</h1>");
                 meubel.setName(productName);
-                
+
                 String productDescription = StringParserUtil.getStringBetweenTwoStrings(HTML,
                         "<meta name=\"description\"", "<meta name=\"keywords\"");
                 productDescription = StringParserUtil.getStringBetweenTwoStrings(productDescription, "content=\"",
