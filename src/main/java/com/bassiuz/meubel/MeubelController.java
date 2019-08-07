@@ -59,7 +59,7 @@ public class MeubelController {
                 }
             }
         }
-        
+
         return responseList;
     }
 
@@ -78,6 +78,15 @@ public class MeubelController {
         }
       
         return totalResponse;
+    }
+
+      @RequestMapping(value = "/getTop5", method = RequestMethod.GET, produces = "application/json")
+    public List<MeubelResponse> getTop5() {
+        List<MeubelResponse> responseList  = new ArrayList<>();
+        List<Meubel> meubelsFromDatabase = meubelRepository.fetchTop5Meubels();
+        responseList.addAll(MeubelResponse.fromMeubelList(meubelsFromDatabase));
+      
+        return responseList;
     }
 
     @RequestMapping(value = "/getRandomName", method = RequestMethod.GET, produces = "application/json")

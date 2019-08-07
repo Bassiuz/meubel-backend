@@ -13,4 +13,7 @@ public interface MeubelRepository extends CrudRepository<Meubel, Long> {
     @Query("SELECT m FROM Meubel m WHERE m.matchingPersonName=:name ORDER BY m.score DESC")
     public List<Meubel> fetchMeubelsByName(@Param("name") String name);
 
+    @Query(value="SELECT * FROM Meubel ORDER BY score DESC LIMIT 5", nativeQuery = true)
+    public List<Meubel> fetchTop5Meubels();
+
 }
