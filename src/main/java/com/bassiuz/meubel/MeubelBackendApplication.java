@@ -11,10 +11,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MeubelBackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MeubelBackendApplication.class, args);
-		
 		DatabaseCredentialsPojo databaseCredentials = DatabaseCredentialsProvider.readConfig();
 		Flyway flyway = Flyway.configure().dataSource(databaseCredentials.getDatabaseUrl(), databaseCredentials.getUsername(), databaseCredentials.getPassword()).load();
 		flyway.migrate();
+
+		SpringApplication.run(MeubelBackendApplication.class, args);
 	}
 }

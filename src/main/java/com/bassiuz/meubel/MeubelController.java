@@ -1,15 +1,18 @@
 package com.bassiuz.meubel;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import com.bassiuz.meubel.domain.Meubel;
 import com.bassiuz.meubel.parsers.IkeaParser;
 import com.bassiuz.meubel.parsers.LeenBakkerParser;
+import com.bassiuz.meubel.parsers.MeubelParser;
 import com.bassiuz.meubel.responses.MeubelResponse;
 import com.bassiuz.meubel.util.RandomNameGenerator;
 
-import org.jsoup.Jsoup;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,45 +25,55 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/Meubel")
 public class MeubelController {
 
-    
+    @Autowired
+    private MeubelRepository meubelRepository;
+
     @GetMapping("/")
     public String index() {
         return "This will get a meubel result.";
     }
+    
+    public List<MeubelParser> getMeubelParsers()
+    {
+        ArrayList<MeubelParser> parsers = new ArrayList<>();
+        parsers.add(new LeenBakkerParser());
+        parsers.add(new IkeaParser());
+        return parsers;
+    }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = "application/json")
     public List<MeubelResponse> getMeubel( @RequestParam("name") String name) {
-        List<MeubelResponse> response  = new ArrayList<>();
-        List<MeubelResponse> leenBakkerResponses = new LeenBakkerParser().parseMeubelsForName(name);
-        List<MeubelResponse> ikeaResponses =  new IkeaParser().parseMeubelsForName(name);
+        List<MeubelResponse> responseList  = new ArrayList<>();
+        List<Meubel> meubelsFromDatabase = meubelRepository.fetchMeubelsByName(name);
+        responseList.addAll(MeubelResponse.fromMeubelList(meubelsFromDatabase));
 
-        response.addAll(leenBakkerResponses);
-        response.addAll(ikeaResponses);
+        for (MeubelParser meubelParser : getMeubelParsers())
+        {
+            List<MeubelResponse> responsesFromParser =  meubelParser.parseMeubelsForName(name);
 
-        return response;
+            for(MeubelResponse response : responsesFromParser)
+            {
+                if (!responseList.contains(response))
+                {
+                    responseList.add(response);
+                }
+            }
+        }
+        
+        return responseList;
     }
 
     @RequestMapping(value = "/getSomeRandom", method = RequestMethod.GET, produces = "application/json")
     public List<MeubelResponse> getSomeRandom() {
-        List<MeubelResponse> totalResponse  = new ArrayList<>();
+        List<MeubelResponse> totalResponse = new ArrayList<>();
         final int amountOfRandomResults = 5;
         
-        for (int i = 0; i < amountOfRandomResults; i++) {
+        while(totalResponse.size() < amountOfRandomResults) {
             String name = RandomNameGenerator.getRandomName();
-            List<MeubelResponse> response  = new ArrayList<>();
-            List<MeubelResponse> leenBakkerResponses = new LeenBakkerParser().parseMeubelsForName(name);
-            List<MeubelResponse> ikeaResponses =  new IkeaParser().parseMeubelsForName(name);
-    
-            response.addAll(leenBakkerResponses);
-            response.addAll(ikeaResponses);
+            List<MeubelResponse> response = getMeubel(name);
             if (response.size() > 0)
             {
                 totalResponse.add(response.get(0));
-            }
-            else
-            {
-                // if a name has no responses, try another name.
-                i--;
             }
         }
       
