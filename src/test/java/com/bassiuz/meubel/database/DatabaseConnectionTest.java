@@ -8,7 +8,7 @@ public class DatabaseConnectionTest {
 
     @Test
     public void testDatabaseCredentials() {
-        DatabaseCredentialsPojo databasePojo = HerokuConfigReader.readConfig();
+        DatabaseCredentialsPojo databasePojo = DatabaseCredentialsProvider.readConfig();
         assertTrue("DatabaseURL is configured.",
                 databasePojo.getDatabaseUrl() != null && databasePojo.getDatabaseUrl().length() > 0);
 

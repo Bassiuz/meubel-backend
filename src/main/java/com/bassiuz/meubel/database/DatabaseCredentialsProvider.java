@@ -4,12 +4,12 @@ import java.io.IOException;
 
 import com.bassiuz.meubel.util.ConfigFileReader;
 
-public class HerokuConfigReader {
+public class DatabaseCredentialsProvider {
 
     public static DatabaseCredentialsPojo readConfig() {
         if (System.getenv("CLEARDB_DATABASE_URL") != null) {
             // using the credentials configured on the Heroku server
-            return new DatabaseCredentialsPojo(System.getenv("CLEARDB_DATABASE_URL"), System.getenv("CLEARDB_USERNAME"),
+            return new DatabaseCredentialsPojo(System.getenv("CLEARDB_JBDC_DATABASE_URL"), System.getenv("CLEARDB_USERNAME"),
                     System.getenv("CLEARDB_PASSWORD"));
 
         } else {
